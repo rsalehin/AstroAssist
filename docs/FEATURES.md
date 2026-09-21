@@ -112,7 +112,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 ## AG — agents and orchestration
 | ID | Feature | Milestone | Status |
 |---|---|---|---|
-| F-AG-001 | LangGraph state schema with typed artifacts; SQLite checkpointer | M0 | ☐ |
+| F-AG-001 | LangGraph state schema with typed artifacts; SQLite checkpointer | M0 | ☑ |
 | F-AG-002 | Intent router (cheap model) | M1 | ☐ |
 | F-AG-003 | Planner producing explicit workflow DAG (parallel branches) | M1 | ☐ |
 | F-AG-004 | Supervisor / replanner on step failure | M2 | ☐ |
@@ -124,7 +124,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-AG-010 | Time-Domain Agent (lightkurve, later ZTF/AAVSO) | M2 | ☐ |
 | F-AG-011 | Spectroscopy Agent (NIST, VALD, specutils) | M4 | ☐ |
 | F-AG-012 | Synthesis node: cites artifact IDs, never invents numbers | M1 | ☐ |
-| F-AG-013 | HITL interrupts: expensive query, large download, proprietary data, generated code, overwrite/delete, external export, high-impact ambiguous assumption | M1 | ☐ |
+| F-AG-013 | HITL interrupts: expensive query, large download, proprietary data, generated code, overwrite/delete, external export, high-impact ambiguous assumption | M1 | ◐ |
 | F-AG-014 | Research Trace exposed to user (step, source, duration) | M2 | ☐ |
 | F-AG-015 | LangSmith tracing (opt-in, redacted) | M0 | ☐ |
 | F-AG-016 | Tool registry with typed schemas auto-exposed to agents | M0 | ☑ |

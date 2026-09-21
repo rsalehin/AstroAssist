@@ -9,3 +9,4 @@
 - Model providers: `ModelProvider` protocol, role/profile config, Anthropic/OpenAI/OpenAI-compatible/Ollama/vLLM adapters, error hierarchy [F-CORE-005].
 - Deterministic `mock` provider (scripted from code or YAML) and `astroassist eval fixtures --ts` [F-EVAL-001].
 - Tool registry (domain, risk class, cost estimator) and the `echo` tool returning a `ScientificValue` [F-AG-016].
+- LangGraph skeleton (ingest→route→execute→synthesize) with SQLite checkpointer and HITL interrupt payloads [F-AG-001/013].
