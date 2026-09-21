@@ -36,12 +36,35 @@ def eval_fixtures(
 
 
 @app.command()
-def serve(host: str = "127.0.0.1", port: int = 8765, open_browser: bool = True) -> None:
-    """Start the local FastAPI backend and open the browser workbench (M0 implements this)."""
-    typer.echo(
-        f"astroassist serve on http://{host}:{port} — not implemented yet (see docs/IMPLEMENTATION_PLAN.md M0-8)"
-    )
-    raise typer.Exit(code=2)
+def serve(
+    host: str = "127.0.0.1",
+    port: int = 8765,
+    profile: str | None = typer.Option(None, "--profile", help="Model profile (e.g. mock)."),
+    open_browser: bool = typer.Option(True, "--open-browser/--no-open-browser"),
+) -> None:
+    """Start the local FastAPI backend and (optionally) open the browser workbench."""
+    import os
+
+    if profile:
+        os.environ["ASTROASSIST_MODEL_PROFILE"] = profile
+
+    import uvicorn
+
+    from astroassist.core.config import load_settings
+    from astroassist.server.app import create_app
+
+    settings = load_settings()
+    settings.host, settings.port = host, port
+    app_instance = create_app(settings)
+
+    if open_browser:
+        import threading
+        import webbrowser
+
+        threading.Timer(1.0, lambda: webbrowser.open(f"http://{host}:{port}")).start()
+
+    typer.echo(f"AstroAssist serving on http://{host}:{port} (profile={settings.model_profile})")
+    uvicorn.run(app_instance, host=host, port=port, log_level="info")
 
 
 if __name__ == "__main__":

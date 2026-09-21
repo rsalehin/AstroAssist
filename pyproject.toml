@@ -96,8 +96,8 @@ select = ["E", "F", "I", "B", "UP", "N", "W", "SIM", "RUF"]
 ignore = ["E501"]
 
 [tool.ruff.lint.flake8-bugbear]
-# Typer's dependency-injection idiom requires these calls in argument defaults.
-extend-immutable-calls = ["typer.Option", "typer.Argument"]
+# Typer and FastAPI dependency-injection idioms require these calls in argument defaults.
+extend-immutable-calls = ["typer.Option", "typer.Argument", "fastapi.Depends", "fastapi.Query", "fastapi.Path"]
 
 [tool.mypy]
 # 3.12 so mypy can parse modern dependency stubs (numpy uses PEP 695 `type` aliases).

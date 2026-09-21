@@ -121,6 +121,15 @@ class WorkspaceStore:
         with Session(self.engine) as db:
             return db.get(Thread, thread_id)
 
+    def list_threads(self, workspace_id: str) -> list[Thread]:
+        with Session(self.engine) as db:
+            stmt = (
+                select(Thread)
+                .where(Thread.workspace_id == workspace_id)
+                .order_by(Thread.created_at)
+            )
+            return list(db.exec(stmt))
+
     def add_message(self, thread_id: str, role: str, content: str) -> Message:
         with Session(self.engine) as db:
             count = len(list(db.exec(select(Message).where(Message.thread_id == thread_id))))
