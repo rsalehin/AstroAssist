@@ -134,8 +134,8 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 ## UI — workbench
 | ID | Feature | Milestone | Status |
 |---|---|---|---|
-| F-UI-001 | Three-pane workbench: workspace rail / chat / artifact viewer; bottom trace & jobs bar | M1 | ☐ |
-| F-UI-002 | Chat with streaming, markdown + inline artifact cards | M1 | ☐ |
+| F-UI-001 | Three-pane workbench: workspace rail / chat / artifact viewer; bottom trace & jobs bar | M1 | ☑ |
+| F-UI-002 | Chat with streaming, markdown + inline artifact cards | M1 | ☑ |
 | F-UI-003 | Object card | M1 | ☐ |
 | F-UI-004 | Scientific value card (value ± unc unit, source, derivation) | M1 | ☐ |
 | F-UI-005 | Table viewer: units, metadata, sort/filter, export | M1 | ☐ |
@@ -149,9 +149,9 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-UI-013 | HITL approval dialogs | M1 | ☐ |
 | F-UI-014 | Jobs panel (running/queued/done; cancel) | M2 | ☐ |
 | F-UI-015 | Research Trace panel | M2 | ☐ |
-| F-UI-016 | Dark (default) + light themes, WCAG-AA contrast, keyboard focus | M1 | ☐ |
+| F-UI-016 | Dark (default) + light themes, WCAG-AA contrast, keyboard focus | M1 | ☑ |
 | F-UI-017 | Command palette (Ctrl/Cmd+K), Ctrl/Cmd+Enter, slash commands `/resolve /query /cone /plot /fit /cite /export` | M2 | ☐ |
-| F-UI-018 | Settings: models, profiles, credentials, thresholds, cache, theme | M1 | ☐ |
+| F-UI-018 | Settings: models, profiles, credentials, thresholds, cache, theme | M1 | ◐ |
 | F-UI-019 | Source-disagreement banner | M2 | ☐ |
 | F-UI-020 | Capability-limitation and fallback notices | M2 | ☐ |
 | F-UI-021 | Desktop-only responsive floor (≥1280 px); read-only mobile later | M1 | ☐ |
@@ -172,7 +172,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-EVAL-002 | Live contract tests (nightly / manual) | M1 | ☐ |
 | F-EVAL-003 | Astronomy benchmark (100–300 questions) with deterministic evaluators | M3 | ☐ |
 | F-EVAL-004 | Agent-quality metrics (source selection, tool correctness, provenance completeness, trajectory efficiency, …) in LangSmith | M3 | ☐ |
-| F-EVAL-005 | CI: lint, type-check, unit tests on 3.11/3.12/3.13 × Linux/macOS/Windows | M0 | ☐ |
+| F-EVAL-005 | CI: lint, type-check, unit tests on 3.11/3.12/3.13 × Linux/macOS/Windows | M0 | ◐ |
 
 ## COMM — community and repo hygiene
 | ID | Feature | Milestone | Status |

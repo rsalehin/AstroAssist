@@ -11,3 +11,5 @@
 - Tool registry (domain, risk class, cost estimator) and the `echo` tool returning a `ScientificValue` [F-AG-016].
 - LangGraph skeleton (ingest→route→execute→synthesize) with SQLite checkpointer and HITL interrupt payloads [F-AG-001/013].
 - FastAPI server with SSE streaming (trace/artifact/token/done), workspace/thread/artifact/interrupt/settings routes, and a working `astroassist serve --profile mock` [F-CORE-001].
+- React/TS/Vite/Tailwind workbench: three-pane layout, SSE chat, generic artifact card, settings panel, dark/light themes [F-UI-001/002/016/018].
+- Frontend test harness: vitest + React Testing Library component tests and a Playwright e2e (mock backend) asserting the echo artifact card, wired into `make check` [F-EVAL-005].

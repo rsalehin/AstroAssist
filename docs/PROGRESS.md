@@ -14,6 +14,9 @@ blocked: false
 - [x] M0-7 LangGraph skeleton — `workflows/state.py`, `workflows/graph.py` (ingest→route→execute→synthesize + SQLite checkpointer), `workflows/interrupts.py` (run_code/large_query payloads) (2026-09-22)
 - [x] M0-8 Server — `server/app.py` (`create_app`), routes (chat SSE, workspaces, threads, artifacts, interrupts, settings, bootstrap, health), `server/stream.py` (ARCHITECTURE event schema), `astroassist serve --profile mock` boots and streams the echo round-trip (2026-09-22)
 
+- [x] M0-9 Frontend shell — Vite+React+TS+Tailwind three-pane workbench, SSE chat, generic `ArtifactCard`, settings panel, dark/light tokens (2026-09-22)
+- [x] M0-9b Test harness — vitest+RTL component tests, Playwright e2e (mock backend + Vite dev) asserting the echo artifact card; wired into `make check` (2026-09-22)
+
 ## Current
 - [ ] current: (none)
 

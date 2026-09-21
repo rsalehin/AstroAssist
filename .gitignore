@@ -17,6 +17,10 @@ htmlcov/
 !tests/fixtures/**
 frontend/node_modules/
 frontend/dist/
+frontend/.e2e-tmp/
+frontend/playwright-report/
+frontend/test-results/
+frontend/.vite/
 .DS_Store
 .idea/
 .vscode/

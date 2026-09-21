@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark theme (default). WCAG-AA contrast; see docs/UI_UX.md. */
+:root {
+  --aa-surface: 17 18 23;
+  --aa-panel: 24 26 33;
+  --aa-ink: 232 234 240;
+  --aa-muted: 148 155 170;
+  --aa-accent: 96 165 250;
+  --aa-border: 42 46 57;
+  color-scheme: dark;
+}
+
+/* Light theme applied by toggling the `light` class on <html>. */
+:root.light {
+  --aa-surface: 250 250 252;
+  --aa-panel: 255 255 255;
+  --aa-ink: 22 24 30;
+  --aa-muted: 90 98 112;
+  --aa-accent: 37 99 235;
+  --aa-border: 224 227 233;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  @apply bg-surface text-ink;
+}
+
+*:focus-visible {
+  outline: 2px solid rgb(var(--aa-accent));
+  outline-offset: 2px;
+}

@@ -74,7 +74,7 @@ def _render_ts(artifacts: dict[str, Artifact]) -> str:
     names = list(artifacts)
     for name in names:
         payload = json.dumps(artifact_to_dict(artifacts[name]), indent=2)
-        lines.append(f"export const {name} = {payload} as const;")
+        lines.append(f"export const {name} = {payload};")
         lines.append("")
     joined = ", ".join(names)
     lines.append(f"export const artifactFixtures = {{ {joined} }};")
