@@ -5,3 +5,4 @@
 - Package scaffold finalized: `astroassist version` CLI + tests [F-CORE-001/002].
 - Core types: astropy JSON codecs (`QuantityValue`/`SkyCoordValue`/`TimeValue`), `Provenance` + id helpers, and all DATA_MODEL artifact kinds with a discriminated union [F-CORE-003/004].
 - Config (`config.toml` + `ASTROASSIST_*` env), `CredentialManager` (keyring > env > session), and redacted structured logging [F-CORE-007/008/009].
+- Workspace store: SQLModel metadata (workspace/session/thread/message/artifact-index/job), on-disk artifact layout, and a DuckDB artifact catalog [F-WS-001/002].

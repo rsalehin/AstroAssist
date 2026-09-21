@@ -23,8 +23,8 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 ## WS — workspace and persistence
 | ID | Feature | Milestone | Status |
 |---|---|---|---|
-| F-WS-001 | Workspace / Session / Thread / Artifact model (SQLite metadata) | M0 | ☐ |
-| F-WS-002 | Artifact store: files (Parquet/ECSV/FITS/SVG/PNG) + DuckDB catalog | M0 | ☐ |
+| F-WS-001 | Workspace / Session / Thread / Artifact model (SQLite metadata) | M0 | ☑ |
+| F-WS-002 | Artifact store: files (Parquet/ECSV/FITS/SVG/PNG) + DuckDB catalog | M0 | ☑ |
 | F-WS-003 | Per-workspace session object cache (resolved objects) | M1 | ☐ |
 | F-WS-004 | Source-specific query cache with TTL policy; refresh / use-cached / offline modes | M1 | ☐ |
 | F-WS-005 | Cache keyed by source + service version + query + params + auth scope | M1 | ☐ |
