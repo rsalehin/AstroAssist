@@ -9,7 +9,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-CORE-002 | Installable via `uv tool install` and `pip`; `environment.yml` for conda | M0 | ☑ |
 | F-CORE-003 | Typed artifact base classes with mandatory provenance (Pydantic) | M0 | ☑ |
 | F-CORE-004 | Unit-aware scientific types: Quantity, SkyCoord, Time, QTable throughout | M0 | ☑ |
-| F-CORE-005 | `ModelProvider` protocol + adapters: Anthropic, OpenAI, OpenAI-compatible, Ollama, vLLM | M0 | ☐ |
+| F-CORE-005 | `ModelProvider` protocol + adapters: Anthropic, OpenAI, OpenAI-compatible, Ollama, vLLM | M0 | ☑ |
 | F-CORE-006 | Model profiles: economy / balanced / research / local; per-role model assignment (router, planner, synthesis) | M1 | ☐ |
 | F-CORE-007 | `CredentialManager`: OS keyring → env var → session; never on disk in plaintext | M0 | ☑ |
 | F-CORE-008 | Config file (`~/.astroassist/config.toml`) with sane zero-config defaults | M0 | ☑ |
@@ -168,7 +168,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 ## EVAL — testing and evaluation
 | ID | Feature | Milestone | Status |
 |---|---|---|---|
-| F-EVAL-001 | Recorded-fixture unit tests for every connector and tool | M1 | ☐ |
+| F-EVAL-001 | Recorded-fixture unit tests for every connector and tool | M1 | ◐ |
 | F-EVAL-002 | Live contract tests (nightly / manual) | M1 | ☐ |
 | F-EVAL-003 | Astronomy benchmark (100–300 questions) with deterministic evaluators | M3 | ☐ |
 | F-EVAL-004 | Agent-quality metrics (source selection, tool correctness, provenance completeness, trajectory efficiency, …) in LangSmith | M3 | ☐ |
