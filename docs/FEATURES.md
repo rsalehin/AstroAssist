@@ -126,7 +126,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-AG-012 | Synthesis node: cites artifact IDs, never invents numbers | M1 | ☐ |
 | F-AG-013 | HITL interrupts: expensive query, large download, proprietary data, generated code, overwrite/delete, external export, high-impact ambiguous assumption | M1 | ◐ |
 | F-AG-014 | Research Trace exposed to user (step, source, duration) | M2 | ☐ |
-| F-AG-015 | LangSmith tracing (opt-in, redacted) | M0 | ☐ |
+| F-AG-015 | LangSmith tracing (opt-in, redacted) | M0 | ☑ |
 | F-AG-016 | Tool registry with typed schemas auto-exposed to agents | M0 | ☑ |
 | F-AG-017 | Token/cost display per run (optional) | M3 | ☐ |
 | F-AG-018 | Streaming of partial artifacts to UI | M1 | ◐ |
@@ -172,13 +172,13 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-EVAL-002 | Live contract tests (nightly / manual) | M1 | ☐ |
 | F-EVAL-003 | Astronomy benchmark (100–300 questions) with deterministic evaluators | M3 | ☐ |
 | F-EVAL-004 | Agent-quality metrics (source selection, tool correctness, provenance completeness, trajectory efficiency, …) in LangSmith | M3 | ☐ |
-| F-EVAL-005 | CI: lint, type-check, unit tests on 3.11/3.12/3.13 × Linux/macOS/Windows | M0 | ◐ |
+| F-EVAL-005 | CI: lint, type-check, unit tests on 3.11/3.12/3.13 × Linux/macOS/Windows | M0 | ☑ |
 
 ## COMM — community and repo hygiene
 | ID | Feature | Milestone | Status |
 |---|---|---|---|
-| F-COMM-001 | LICENSE (BSD-3), CITATION.cff, codemeta.json, CONTRIBUTING, CODE_OF_CONDUCT | M0 | ☐ |
-| F-COMM-002 | Issue/PR templates, good-first-issue labels | M0 | ☐ |
+| F-COMM-001 | LICENSE (BSD-3), CITATION.cff, codemeta.json, CONTRIBUTING, CODE_OF_CONDUCT | M0 | ☑ |
+| F-COMM-002 | Issue/PR templates, good-first-issue labels | M0 | ☑ |
 | F-COMM-003 | Connector template + `/new-connector` command | M1 | ☐ |
 | F-COMM-004 | Docs site (mkdocs-material) | M3 | ☐ |
 | F-COMM-005 | JOSS-ready structure (tests, docs, examples, citation metadata, releases) | M3 | ☐ |

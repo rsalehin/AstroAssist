@@ -1,6 +1,7 @@
 # Progress (state file for autonomous sessions — keep it short and current)
 
 milestone: M0
+milestone_complete: M0
 blocked: false
 
 ## Done
@@ -16,6 +17,7 @@ blocked: false
 
 - [x] M0-9 Frontend shell — Vite+React+TS+Tailwind three-pane workbench, SSE chat, generic `ArtifactCard`, settings panel, dark/light tokens (2026-09-22)
 - [x] M0-9b Test harness — vitest+RTL component tests, Playwright e2e (mock backend + Vite dev) asserting the echo artifact card; wired into `make check` (2026-09-22)
+- [x] M0-10 CI + hygiene — CI matrix (Linux/macOS/Windows × 3.11/3.12/3.13 + frontend + e2e) green; `concurrency` added; community files + templates + labels present; LangSmith opt-in wiring [F-COMM-001/002][F-EVAL-005][F-AG-015] (2026-09-22)
 
 ## Current
 - [ ] current: (none)

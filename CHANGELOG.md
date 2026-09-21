@@ -13,3 +13,5 @@
 - FastAPI server with SSE streaming (trace/artifact/token/done), workspace/thread/artifact/interrupt/settings routes, and a working `astroassist serve --profile mock` [F-CORE-001].
 - React/TS/Vite/Tailwind workbench: three-pane layout, SSE chat, generic artifact card, settings panel, dark/light themes [F-UI-001/002/016/018].
 - Frontend test harness: vitest + React Testing Library component tests and a Playwright e2e (mock backend) asserting the echo artifact card, wired into `make check` [F-EVAL-005].
+- CI matrix (Linux/macOS/Windows × Python 3.11/3.12/3.13) plus frontend + e2e jobs, with run concurrency; LangSmith tracing opt-in wiring [F-EVAL-005][F-COMM-001/002][F-AG-015].
+- **Milestone M0 complete**: `hello` → echo tool → streamed artifact card in the UI, checkpoint persisted, deterministic mock provider, full test pyramid green.

@@ -105,3 +105,17 @@ def load_settings(config_path: Path | None = None) -> Settings:
 def get_settings() -> Settings:
     """Cached process-wide settings."""
     return load_settings()
+
+
+def apply_langsmith_env(settings: Settings) -> bool:
+    """Enable LangSmith tracing (opt-in) by exporting the env vars LangChain reads.
+
+    The API key is never set here — it stays in the env/keyring the user controls, and tokens are
+    never written to traces. Returns True if tracing was enabled. [F-AG-015]
+    """
+    if not settings.langsmith_tracing:
+        return False
+    os.environ["LANGSMITH_TRACING"] = "true"
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ.setdefault("LANGSMITH_PROJECT", settings.langsmith_project)
+    return True

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from astroassist.core.config import Settings, get_settings
+from astroassist.core.config import Settings, apply_langsmith_env, get_settings
 from astroassist.core.credentials import CredentialManager
 from astroassist.core.models.base import ModelProvider, build_provider
 from astroassist.workflows.graph import build_graph, make_sqlite_checkpointer
@@ -21,6 +21,7 @@ class AppContext:
     @classmethod
     def build(cls, settings: Settings | None = None) -> AppContext:
         settings = settings or get_settings()
+        apply_langsmith_env(settings)
         settings.data_dir.mkdir(parents=True, exist_ok=True)
         store = WorkspaceStore(settings.data_dir)
         provider = build_provider(settings, CredentialManager())
