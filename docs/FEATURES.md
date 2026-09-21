@@ -127,7 +127,7 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-AG-013 | HITL interrupts: expensive query, large download, proprietary data, generated code, overwrite/delete, external export, high-impact ambiguous assumption | M1 | ☐ |
 | F-AG-014 | Research Trace exposed to user (step, source, duration) | M2 | ☐ |
 | F-AG-015 | LangSmith tracing (opt-in, redacted) | M0 | ☐ |
-| F-AG-016 | Tool registry with typed schemas auto-exposed to agents | M0 | ☐ |
+| F-AG-016 | Tool registry with typed schemas auto-exposed to agents | M0 | ☑ |
 | F-AG-017 | Token/cost display per run (optional) | M3 | ☐ |
 | F-AG-018 | Streaming of partial artifacts to UI | M1 | ☐ |
 

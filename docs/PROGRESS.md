@@ -10,6 +10,7 @@ blocked: false
 - [x] M0-4 Workspace store — `workspace/store.py` (SQLModel: workspace/session/thread/message/artifact-index/job + artifact file layout), `workspace/catalog.py` (DuckDB) (2026-09-22)
 - [x] M0-5 Model providers — `core/models/` protocol + profiles + Anthropic/OpenAI/OpenAI-compatible/Ollama/vLLM adapters; `core/errors.py` (2026-09-22)
 - [x] M0-5b Mock provider + fixtures CLI — `core/models/mock.py` (scripted, YAML), `astroassist eval fixtures --ts`, `eval/fixtures.py` (2026-09-22)
+- [x] M0-6 Tool registry + echo — `tools/registry.py` (domain/risk/cost), `tools/echo.py` → `ScientificValue` (2026-09-22)
 
 ## Current
 - [ ] current: (none)
