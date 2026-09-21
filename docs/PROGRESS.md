@@ -4,7 +4,7 @@ milestone: M0
 blocked: false
 
 ## Done
-<!-- - [x] M0-1 Package scaffold (2026-09-22) -->
+- [x] M0-1 Package scaffold — CLI (`version`/`serve`), ruff/mypy/pytest config, pre-commit, CLI tests (2026-09-22)
 
 ## Current
 - [ ] current: (none)

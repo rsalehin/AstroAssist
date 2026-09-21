@@ -5,8 +5,8 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 ## CORE — platform, config, credentials
 | ID | Feature | Milestone | Status |
 |---|---|---|---|
-| F-CORE-001 | `astroassist serve` CLI starts backend and opens browser | M0 | ☐ |
-| F-CORE-002 | Installable via `uv tool install` and `pip`; `environment.yml` for conda | M0 | ☐ |
+| F-CORE-001 | `astroassist serve` CLI starts backend and opens browser | M0 | ◐ |
+| F-CORE-002 | Installable via `uv tool install` and `pip`; `environment.yml` for conda | M0 | ☑ |
 | F-CORE-003 | Typed artifact base classes with mandatory provenance (Pydantic) | M0 | ☐ |
 | F-CORE-004 | Unit-aware scientific types: Quantity, SkyCoord, Time, QTable throughout | M0 | ☐ |
 | F-CORE-005 | `ModelProvider` protocol + adapters: Anthropic, OpenAI, OpenAI-compatible, Ollama, vLLM | M0 | ☐ |
