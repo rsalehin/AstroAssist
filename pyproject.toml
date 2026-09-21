@@ -87,6 +87,9 @@ packages = ["src/astroassist"]
 line-length = 100
 target-version = "py311"
 src = ["src", "tests"]
+# Do not touch Markdown: ruff reformats fenced Python code blocks, which would rewrite the
+# canonical spec docs. Docs are prose + illustrative snippets, not linted source.
+extend-exclude = ["*.md", "docs"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N", "W", "SIM", "RUF"]

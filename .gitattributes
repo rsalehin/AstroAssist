@@ -1,0 +1,17 @@
+# Normalize line endings. Text files are LF in the repo.
+* text=auto eol=lf
+
+# Shell scripts and hooks must stay LF so bash (incl. Git Bash and CI) can run them.
+*.sh text eol=lf
+.claude/hooks/* text eol=lf
+
+# Windows-native files keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary / non-text payloads are never converted.
+*.png binary
+*.svg text
+*.fits binary
+*.parquet binary
+*.ico binary
