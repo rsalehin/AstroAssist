@@ -11,9 +11,9 @@ IDs are stable and referenced in commits, PRs, issues and tests. Milestones: M0 
 | F-CORE-004 | Unit-aware scientific types: Quantity, SkyCoord, Time, QTable throughout | M0 | ☑ |
 | F-CORE-005 | `ModelProvider` protocol + adapters: Anthropic, OpenAI, OpenAI-compatible, Ollama, vLLM | M0 | ☐ |
 | F-CORE-006 | Model profiles: economy / balanced / research / local; per-role model assignment (router, planner, synthesis) | M1 | ☐ |
-| F-CORE-007 | `CredentialManager`: OS keyring → env var → session; never on disk in plaintext | M0 | ☐ |
-| F-CORE-008 | Config file (`~/.astroassist/config.toml`) with sane zero-config defaults | M0 | ☐ |
-| F-CORE-009 | Structured logging with secret redaction | M0 | ☐ |
+| F-CORE-007 | `CredentialManager`: OS keyring → env var → session; never on disk in plaintext | M0 | ☑ |
+| F-CORE-008 | Config file (`~/.astroassist/config.toml`) with sane zero-config defaults | M0 | ☑ |
+| F-CORE-009 | Structured logging with secret redaction | M0 | ☑ |
 | F-CORE-010 | Optional dependency groups / capability packs (timeseries, spectroscopy, imaging, dynamics, radio, interactive) | M1 | ☐ |
 | F-CORE-011 | Capability limitation surfaced in UI when a pack or platform is unavailable | M2 | ☐ |
 | F-CORE-012 | Docker compose deployment | M3 | ☐ |
