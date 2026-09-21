@@ -96,7 +96,9 @@ select = ["E", "F", "I", "B", "UP", "N", "W", "SIM", "RUF"]
 ignore = ["E501"]
 
 [tool.mypy]
-python_version = "3.11"
+# 3.12 so mypy can parse modern dependency stubs (numpy uses PEP 695 `type` aliases).
+# Runtime support for 3.11 is enforced by the CI pytest matrix; ruff target stays py311.
+python_version = "3.12"
 strict = true
 files = ["src/astroassist/core"]
 ignore_missing_imports = true

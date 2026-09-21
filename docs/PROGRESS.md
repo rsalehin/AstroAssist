@@ -5,6 +5,7 @@ blocked: false
 
 ## Done
 - [x] M0-1 Package scaffold — CLI (`version`/`serve`), ruff/mypy/pytest config, pre-commit, CLI tests (2026-09-22)
+- [x] M0-2 Core types — `core/units.py` (Quantity/SkyCoord/Time JSON codecs), `core/provenance.py`, `core/artifacts.py` (all DATA_MODEL kinds + discriminated union), round-trip tests, mypy strict green (2026-09-22)
 
 ## Current
 - [ ] current: (none)
