@@ -1,0 +1,15 @@
+- id: m1-001
+  question: "Resolve AD Leo and give its coordinates."
+  expect: { sources: [SIMBAD], tools: [resolve_object], answer: { ra_deg: 154.9, dec_deg: 19.87, tol_arcsec: 5 } }
+- id: m1-002
+  question: "What is the Gaia DR3 parallax of AD Leo?"
+  expect: { sources: [SIMBAD, Gaia DR3], tools: [resolve_object, gaia_query_object], answer: { value: 201.4, unit: mas, tol: 1.0 }, provenance: { source: "Gaia DR3", query_id: required } }
+- id: m1-003
+  question: "What is the distance to AD Leo in light-years?"
+  expect: { tools: [distance_from_parallax, convert_units], answer: { value: 16.2, unit: lyr, tol: 0.2 }, provenance: { method: derived, inputs: required } }
+- id: m1-004
+  question: "Tangential velocity of AD Leo from Gaia DR3."
+  expect: { tools: [tangential_velocity], answer: { unit: "km / s", tol_rel: 0.05 } }
+- id: m1-005
+  question: "Gaia sources within 2 arcmin of AD Leo with parallax over error > 10."
+  expect: { tools: [gaia_cone_search], query_contains: ["CONTAINS", "parallax_over_error"], artifact: CatalogTable }

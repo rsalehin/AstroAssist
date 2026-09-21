@@ -1,0 +1,5 @@
+AstroAssist core is BSD-3-Clause. It embeds or loads third-party components under their own licenses:
+- Aladin Lite (CDS, Strasbourg) — GPL-3.0. Loaded as a separate component; see docs/adr/ADR-0012-aladin-licensing.md.
+- Astropy, astroquery, pyvo — BSD-3-Clause.
+- LangChain, LangGraph — MIT.
+Data retrieved through connectors is subject to each archive's terms and acknowledgement requirements; AstroAssist records the required citations in references.bib.

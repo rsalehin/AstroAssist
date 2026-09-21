@@ -1,0 +1,13 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "AstroAssist",
+  "description": "A locally-run, multi-agent research workbench for astronomers with mandatory provenance and reproducible exports.",
+  "codeRepository": "https://github.com/rsalehin/AstroAssist",
+  "license": "https://spdx.org/licenses/BSD-3-Clause",
+  "programmingLanguage": ["Python", "TypeScript"],
+  "version": "0.0.1",
+  "developmentStatus": "concept",
+  "author": [{"@type": "Person", "givenName": "A M Rafiqus", "familyName": "Salehin"}],
+  "keywords": ["astronomy", "astrophysics", "astropy", "langgraph", "provenance"]
+}

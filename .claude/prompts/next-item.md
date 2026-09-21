@@ -1,0 +1,5 @@
+You are in autonomous mode for AstroAssist milestone {{MILESTONE}}. Read CLAUDE.md fully, then docs/PROGRESS.md.
+Pick the FIRST unfinished item of {{MILESTONE}} in docs/IMPLEMENTATION_PLAN.md and set it as `- [ ] current:` in docs/PROGRESS.md.
+Then, without asking me anything:
+1. Read every doc the item references. 2. Write tests first (unit with fixtures; component tests for any UI card; an e2e step if the item touches the request path). 3. Implement. 4. Run `make check` until green. 5. Mark the item done in PROGRESS.md, tick feature IDs in docs/FEATURES.md, add a CHANGELOG line. 6. Commit (conventional message with feature IDs) and push.
+If a decision or credential from me is genuinely required, add it under "Needs Abir" in docs/PROGRESS.md, pick a safe default so work can continue, and only set `blocked: true` if nothing else in the milestone can proceed. Do exactly one item, then stop. If all items of {{MILESTONE}} are done, run the milestone exit check from the plan, and if it passes write `milestone_complete: {{MILESTONE}}` in docs/PROGRESS.md.

@@ -1,0 +1,1 @@
+Add a curated deterministic tool named `$ARGUMENTS` under src/astroassist/tools/ per docs/AGENTS.md "Tool contract": Pydantic input schema with units, returns a typed artifact with provenance lineage, registered with domain/risk_class/cost_estimator/version, unit tests with known-answer values (use Astropy for expected results). Never let the LLM do arithmetic this tool could do.

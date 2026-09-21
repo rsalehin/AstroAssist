@@ -1,0 +1,2 @@
+Implement the next unfinished item for milestone $ARGUMENTS from docs/IMPLEMENTATION_PLAN.md.
+1. Read the item and every doc it references. 2. Write the tests first (fixtures, no live calls). 3. Implement. 4. Run `uv run ruff check . && uv run mypy && uv run pytest`. 5. Update docs/FEATURES.md status and CHANGELOG.md. 6. Commit with a conventional message including the feature IDs. Stop after one item and summarize what is next.

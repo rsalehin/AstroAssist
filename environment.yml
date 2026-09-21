@@ -1,0 +1,19 @@
+name: astroassist
+channels: [conda-forge]
+dependencies:
+  - python>=3.11,<3.14
+  - astropy>=6.1
+  - astroquery>=0.4.7
+  - pyvo>=1.5
+  - numpy>=1.26
+  - scipy>=1.12
+  - matplotlib>=3.8
+  - lightkurve>=2.4
+  - astroplan>=0.10
+  - duckdb>=1.0
+  - pyarrow>=16
+  - jupyter_client>=8.6
+  - ipykernel>=6.29
+  - pip
+  - pip:
+      - -e .[dev]

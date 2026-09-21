@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv:*)", "Bash(uv run:*)", "Bash(uvx:*)", "Bash(python:*)", "Bash(python3:*)",
+      "Bash(pytest:*)", "Bash(ruff:*)", "Bash(mypy:*)", "Bash(pre-commit:*)", "Bash(make:*)",
+      "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)",
+      "Bash(git add:*)", "Bash(git commit:*)", "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)",
+      "Bash(git push:*)", "Bash(git pull:*)", "Bash(git checkout:*)", "Bash(git switch:*)", "Bash(git branch:*)",
+      "Bash(git stash:*)", "Bash(git restore:*)", "Bash(gh:*)",
+      "Bash(ls:*)", "Bash(cat:*)", "Bash(mkdir:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(touch:*)", "Bash(find:*)",
+      "Bash(grep:*)", "Bash(rg:*)", "Bash(sed:*)", "Bash(head:*)", "Bash(tail:*)", "Bash(wc:*)", "Bash(echo:*)",
+      "Bash(curl:*)", "Bash(bash scripts/*)", "Bash(sh scripts/*)", "Bash(chmod:*)",
+      "Read", "Edit", "Write", "Glob", "Grep", "WebFetch(domain:docs.astropy.org)", "WebFetch(domain:astroquery.readthedocs.io)",
+      "WebFetch(domain:langchain-ai.github.io)", "WebFetch(domain:docs.langchain.com)", "WebFetch(domain:fastapi.tiangolo.com)",
+      "WebFetch(domain:react.dev)", "WebFetch(domain:playwright.dev)", "WebFetch(domain:vitest.dev)", "WebFetch(domain:github.com)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)", "Bash(rm -rf ~*)", "Bash(git push --force*)", "Bash(git push -f*)", "Bash(git reset --hard*)",
+      "Edit(.env)", "Write(.env)", "Read(.env)", "Edit(**/*.pem)", "Read(**/*.pem)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/session-start.sh" } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Edit|Write", "hooks": [ { "type": "command", "command": "bash .claude/hooks/post-edit.sh", "timeout": 120 } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/verify-before-stop.sh", "timeout": 1500 } ] }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+name: Live contract tests
+on:
+  schedule: [{ cron: "0 3 * * *" }]
+  workflow_dispatch:
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync --extra dev
+      - run: uv run pytest -m live
+        env:
+          ADS_DEV_KEY: ${{ secrets.ADS_DEV_KEY }}

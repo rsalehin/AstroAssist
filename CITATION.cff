@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use AstroAssist in your research, please cite it as below."
+title: "AstroAssist: a provenance-first research workbench for astronomy"
+type: software
+authors:
+  - family-names: Salehin
+    given-names: A M Rafiqus
+    affiliation: "Leipzig University; Thüringer Landessternwarte Tautenburg"
+repository-code: "https://github.com/rsalehin/AstroAssist"
+license: BSD-3-Clause
+version: 0.0.1
+date-released: 2026-09-21
+keywords: [astronomy, astrophysics, research-assistant, provenance, langgraph, astropy]
