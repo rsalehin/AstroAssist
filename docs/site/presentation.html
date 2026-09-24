@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AstroAssist — Presentation</title>
+    <meta name="description" content="A guided walkthrough of AstroAssist: what it is, how it works, the stack, and how it ships." />
+    <style>
+      :root {
+        --bg: #0b0e14; --surface: #11141b; --panel: #161a23; --panel-2: #1b2130;
+        --border: #262c3a; --ink: #e8ebf2; --muted: #99a3b4; --accent: #60a5fa;
+        --accent-2: #a78bfa; --good: #34d399; --warn: #fbbf24;
+        --radius: 16px;
+      }
+      :root[data-theme="light"] {
+        --bg: #f5f7fc; --surface: #fff; --panel: #fff; --panel-2: #eef2fa;
+        --border: #e2e7f1; --ink: #131722; --muted: #56607040; --muted: #566070;
+        --accent: #2563eb; --accent-2: #7c3aed;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; }
+      body {
+        background:
+          radial-gradient(1000px 700px at 85% -10%, rgba(96,165,250,0.16), transparent 60%),
+          radial-gradient(900px 600px at -10% 110%, rgba(167,139,250,0.14), transparent 55%),
+          var(--bg);
+        color: var(--ink);
+        font: 18px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased; overflow: hidden;
+      }
+      code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .deck { height: 100vh; width: 100vw; position: relative; }
+      .slide {
+        position: absolute; inset: 0; display: none; padding: 6vh 8vw 12vh;
+        flex-direction: column; justify-content: center; animation: fade 0.4s ease;
+      }
+      .slide.active { display: flex; }
+      @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+      .kicker { color: var(--accent); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 13px; margin-bottom: 10px; }
+      h1 { font-size: clamp(30px, 5.4vw, 62px); line-height: 1.05; margin: 0 0 14px; letter-spacing: -0.5px; }
+      h1 .g { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      h2 { font-size: clamp(24px, 3.6vw, 40px); margin: 0 0 18px; letter-spacing: -0.3px; }
+      p.big { font-size: clamp(17px, 2.1vw, 23px); color: var(--muted); max-width: 900px; }
+      .muted { color: var(--muted); }
+      .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+      .cols.three { grid-template-columns: repeat(3, 1fr); }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+      .card h3 { margin: 0 0 6px; font-size: 19px; }
+      .card p { margin: 0; color: var(--muted); font-size: 15.5px; }
+      ul.big { font-size: clamp(16px, 2vw, 21px); line-height: 1.8; padding-left: 22px; margin: 8px 0; }
+      ul.big b { color: var(--ink); }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .chip { border: 1px solid var(--border); background: var(--panel); color: var(--muted); border-radius: 999px; padding: 6px 12px; font-size: 14px; }
+      .chip b { color: var(--ink); }
+      table { width: 100%; border-collapse: collapse; font-size: clamp(13px, 1.5vw, 16px); }
+      th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+      th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+      pre { background: #0c0f16; color: #d7e0f5; border: 1px solid var(--border); border-radius: 12px; padding: 16px; overflow: auto; font-size: 14px; }
+      pre .c { color: #6b7794; } pre .k { color: #7cc4ff; } pre .s { color: #8ce8b0; }
+      .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: clamp(12px, 1.5vw, 16px); }
+      .node { border: 1px solid var(--border); background: var(--panel-2); border-radius: 10px; padding: 8px 12px; }
+      .node.hot { border-color: var(--warn); } .node.end { border-color: var(--accent-2); }
+      .arrow { color: var(--accent); }
+      svg.dia { width: 100%; height: auto; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); }
+      .svgtxt { fill: var(--ink); font: 13px ui-sans-serif, system-ui, sans-serif; }
+      .svgmut { fill: var(--muted); font: 12px ui-sans-serif, system-ui, sans-serif; }
+      .svgbox { fill: var(--panel-2); stroke: var(--border); }
+
+      /* chrome */
+      .topbar { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; gap: 12px; padding: 14px 20px; z-index: 20; }
+      .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px; }
+      .brand svg { width: 22px; height: 22px; }
+      .topbar .sp { margin-left: auto; }
+      .btn { cursor: pointer; background: var(--panel); border: 1px solid var(--border); color: var(--ink); border-radius: 9px; padding: 7px 11px; font-size: 14px; }
+      .btn:hover { border-color: var(--accent); }
+      a { color: var(--accent); text-decoration: none; }
+      .progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); z-index: 30; transition: width 0.3s ease; }
+      .controls { position: fixed; bottom: 16px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 14px; z-index: 20; }
+      .dots { display: flex; gap: 7px; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; border: none; padding: 0; }
+      .dot.on { background: var(--accent); transform: scale(1.25); }
+      .counter { position: fixed; bottom: 18px; right: 22px; color: var(--muted); font-size: 13px; z-index: 20; }
+      .hint { position: fixed; bottom: 18px; left: 22px; color: var(--muted); font-size: 12.5px; z-index: 20; }
+      @media (max-width: 820px) { .cols, .cols.three { grid-template-columns: 1fr; } .hint { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <div class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="url(#g)" stroke-width="2"/><circle cx="16" cy="16" r="4.5" fill="url(#g)"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#60a5fa"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+        </svg>
+        AstroAssist
+      </div>
+      <div class="sp"></div>
+      <a class="btn" href="reference.html">Full reference →</a>
+      <button class="btn" id="theme" title="Toggle theme">◐</button>
+    </div>
+
+    <div class="deck" id="deck">
+      <!-- 1 · title -->
+      <section class="slide active">
+        <div class="kicker">Provenance-first · locally-run · multi-agent</div>
+        <h1>A research workbench<br /><span class="g">for astronomers</span></h1>
+        <p class="big">Ask in natural language. Get answers where every number has a unit, an uncertainty,
+          a source, and a re-runnable query — assembled from archives, Astropy and the literature,
+          entirely on your own machine.</p>
+        <div class="chips" style="margin-top: 24px">
+          <span class="chip"><b>M0 complete</b> — green end-to-end</span>
+          <span class="chip">FastAPI · LangGraph · React</span>
+          <span class="chip">Python 3.11–3.13</span>
+          <span class="chip">BSD-3-Clause</span>
+        </div>
+      </section>
+
+      <!-- 2 · problem -->
+      <section class="slide">
+        <div class="kicker">Why</div>
+        <h2>Researchers distrust anything that can’t show its sources</h2>
+        <div class="cols">
+          <div>
+            <p class="big">A normal week combines object metadata, catalog measurements, archival
+              observations, papers and Python calculations across SIMBAD, VizieR, ADS and Jupyter.</p>
+            <p class="big" style="color: var(--ink)">General chat assistants hallucinate numbers and
+              hide their queries. <b>A beautiful hallucinated table is a product failure.</b></p>
+          </div>
+          <div class="card">
+            <h3>Core promise</h3>
+            <ul class="big" style="font-size: 17px">
+              <li>Every number: unit, uncertainty, source, query</li>
+              <li>Disagreeing sources shown side by side</li>
+              <li>Failed/substituted sources reported</li>
+              <li>Nothing expensive runs without asking</li>
+              <li>Whole session exports as a runnable bundle</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 · day one -->
+      <section class="slide">
+        <div class="kicker">The target</div>
+        <h2>Day-one story — investigate <span style="color: var(--accent-2)">AD&nbsp;Leo</span></h2>
+        <div class="flow" style="margin: 6px 0 18px">
+          <span class="node">Resolve</span><span class="arrow">→</span>
+          <span class="node">Astrometry</span><span class="arrow">→</span>
+          <span class="node">Distance &amp; velocity</span><span class="arrow">→</span>
+          <span class="node">TESS light curve</span><span class="arrow">→</span>
+          <span class="node">Flares</span><span class="arrow">→</span>
+          <span class="node">Papers</span><span class="arrow">→</span>
+          <span class="node end">Reproducible summary</span>
+        </div>
+        <p class="big">One stellar question exercises nearly every capability: name resolution,
+          coordinates, Gaia astrometry, VizieR photometry, MAST/TESS light curves, physical
+          calculations, plots, papers and citations — with <b>full provenance</b> and a
+          <b>runnable export</b>. If that works, v1 is real.</p>
+      </section>
+
+      <!-- 4 · architecture -->
+      <section class="slide">
+        <div class="kicker">Architecture</div>
+        <h2>UI → API → orchestration → tools → typed artifacts</h2>
+        <svg class="dia" viewBox="0 0 900 340" role="img" aria-label="Architecture">
+          <rect class="svgbox" x="300" y="14" width="300" height="40" rx="9"/><text class="svgtxt" x="450" y="39" text-anchor="middle" font-weight="700">React workbench — rail · chat · viewer</text>
+          <line x1="450" y1="54" x2="450" y2="74" stroke="var(--accent)" stroke-width="2"/><text class="svgmut" x="466" y="70">HTTP + SSE</text>
+          <rect class="svgbox" x="300" y="74" width="300" height="38" rx="9"/><text class="svgtxt" x="450" y="98" text-anchor="middle" font-weight="700">FastAPI — routes · streaming · static</text>
+          <line x1="450" y1="112" x2="450" y2="130" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="180" y="130" width="540" height="66" rx="12" fill="var(--panel-2)" stroke="var(--accent)" stroke-dasharray="4 4"/>
+          <text class="svgtxt" x="450" y="152" text-anchor="middle" font-weight="700">LangGraph — ingest→resolve→route→plan→preflight→execute→supervise→synthesize</text>
+          <text class="svgmut" x="450" y="176" text-anchor="middle">SQLite checkpointer · HITL interrupts · LangSmith (opt-in)</text>
+          <g>
+            <rect class="svgbox" x="120" y="214" width="150" height="38" rx="8"/><text class="svgmut" x="195" y="238" text-anchor="middle">Object · Observation</text>
+            <rect class="svgbox" x="290" y="214" width="150" height="38" rx="8"/><text class="svgmut" x="365" y="238" text-anchor="middle">Literature · TimeDomain</text>
+            <rect class="svgbox" x="460" y="214" width="150" height="38" rx="8"/><text class="svgmut" x="535" y="238" text-anchor="middle">Compute · Vis</text>
+            <rect class="svgbox" x="630" y="214" width="150" height="38" rx="8" stroke="var(--accent-2)"/><text class="svgmut" x="705" y="238" text-anchor="middle">Supervisor · Synthesis</text>
+          </g>
+          <text class="svgmut" x="450" y="272" text-anchor="middle">agents = reasoning roles · sources = tools (SIMBAD · Gaia · VizieR · MAST · ADS · Astropy)</text>
+          <rect x="270" y="286" width="360" height="38" rx="10" fill="var(--panel-2)" stroke="var(--accent-2)"/>
+          <text class="svgtxt" x="450" y="310" text-anchor="middle" font-weight="700">Typed artifacts + provenance → SQLite · DuckDB · files</text>
+        </svg>
+      </section>
+
+      <!-- 5 · lifecycle -->
+      <section class="slide">
+        <div class="kicker">Request lifecycle</div>
+        <h2>Nine stages, with a human gate on risk</h2>
+        <div class="flow" style="margin: 10px 0 20px">
+          <span class="node">Ingest</span><span class="arrow">→</span>
+          <span class="node">Resolve</span><span class="arrow">→</span>
+          <span class="node">Route</span><span class="arrow">→</span>
+          <span class="node">Plan</span><span class="arrow">→</span>
+          <span class="node hot">Preflight ⚠</span><span class="arrow">→</span>
+          <span class="node">Execute</span><span class="arrow">→</span>
+          <span class="node">Supervise</span><span class="arrow">→</span>
+          <span class="node">Synthesize</span><span class="arrow">→</span>
+          <span class="node end">Persist</span>
+        </div>
+        <div class="cols three">
+          <div class="card"><h3>Plan</h3><p>An explicit DAG of typed steps with declared inputs/outputs — stored as an artifact you can inspect.</p></div>
+          <div class="card"><h3>Preflight ⚠</h3><p>Cost estimate per step (queries, rows, bytes, seconds). Over threshold → approve / edit / cancel interrupt.</p></div>
+          <div class="card"><h3>Synthesize</h3><p>Answer written from artifact summaries only, citing ids. A post-check rejects numerals with no artifact.</p></div>
+        </div>
+      </section>
+
+      <!-- 6 · data flow -->
+      <section class="slide">
+        <div class="kicker">Data flow · what ships today</div>
+        <h2>The <code>echo</code> round-trip — the shape every feature reuses</h2>
+        <div class="cols">
+          <div>
+            <div class="flow" style="flex-direction: column; align-items: flex-start; gap: 10px">
+              <span class="node"><b>1</b> UI → POST /threads/{id}/messages</span>
+              <span class="node"><b>2</b> FastAPI → graph.invoke(text)</span>
+              <span class="node"><b>3</b> execute → echo → ScientificValue</span>
+              <span class="node end"><b>4</b> SSE: trace · artifact · token · done</span>
+              <span class="node"><b>5</b> card renders · state checkpointed</span>
+            </div>
+          </div>
+          <div>
+            <pre style="margin: 0"><span class="c">// each SSE line = one JSON event</span>
+{<span class="k">"type"</span>:<span class="s">"trace"</span>,<span class="k">"step"</span>:<span class="s">"execute"</span>,<span class="k">"tool"</span>:<span class="s">"echo"</span>}
+{<span class="k">"type"</span>:<span class="s">"artifact"</span>,<span class="k">"artifact"</span>:{
+   <span class="k">"kind"</span>:<span class="s">"ScientificValue"</span>,
+   <span class="k">"summary"</span>:<span class="s">"Echo of: hello"</span>,
+   <span class="k">"provenance"</span>:{<span class="k">"method"</span>:<span class="s">"derived"</span>,…}}}
+{<span class="k">"type"</span>:<span class="s">"token"</span>,<span class="k">"text"</span>:<span class="s">"Echo complete…"</span>}
+{<span class="k">"type"</span>:<span class="s">"done"</span>}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 · data model -->
+      <section class="slide">
+        <div class="kicker">Data model</div>
+        <h2>No naked numbers · no artifact without provenance</h2>
+        <div class="cols">
+          <div>
+            <p class="big">Every scientific output is a typed <b>artifact</b> carrying a full
+              <b>Provenance</b> record. Physical numbers are Astropy <code>Quantity</code> /
+              <code>SkyCoord</code> / <code>Time</code> so units survive the wire.</p>
+            <div class="chips">
+              <span class="chip">ResolvedObject</span><span class="chip">ScientificValue</span>
+              <span class="chip">CatalogTable</span><span class="chip">LightCurve</span>
+              <span class="chip">QueryArtifact</span><span class="chip">PlotArtifact</span>
+              <span class="chip">CodeArtifact</span><span class="chip">+ 8 more</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Provenance</h3>
+            <pre style="margin: 0; font-size: 13px">method · source · source_version
+source_record_id · query_id
+inputs[] <span class="c"># lineage</span> · tool · code_hash
+parameters · citation_keys
+quality_flags · warnings</pre>
+            <p style="margin-top: 10px">Immutable; edits create a new artifact with <code>parent_id</code>. Lineage is walked to build the reproducibility bundle.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 · stack -->
+      <section class="slide">
+        <div class="kicker">Tech stack</div>
+        <h2>Boring where it counts, pluggable where it helps</h2>
+        <table>
+          <tbody>
+            <tr><th>Backend</th><td>FastAPI + uvicorn · SSE · persistent analysis kernel (jupyter_client)</td></tr>
+            <tr><th>Orchestration</th><td>LangGraph (state graph · SQLite checkpointer · interrupts) · LangChain tools · LangSmith opt-in</td></tr>
+            <tr><th>Models</th><td>ModelProvider protocol — Anthropic · OpenAI · OpenAI-compatible · Ollama · vLLM · <b>mock</b> for tests</td></tr>
+            <tr><th>Science</th><td>astropy · astroquery · pyvo · numpy · scipy · matplotlib · lightkurve · astroplan</td></tr>
+            <tr><th>Storage</th><td>DuckDB (catalog) · SQLite (metadata + checkpoints) · files (FITS/ECSV/Parquet/SVG)</td></tr>
+            <tr><th>Frontend</th><td>React · TypeScript · Vite · Tailwind · TanStack Query · Zustand</td></tr>
+            <tr><th>Quality</th><td>ruff · mypy (strict core) · pytest+recording · vitest+RTL · Playwright · pre-commit</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 9 · built -->
+      <section class="slide">
+        <div class="kicker">Status</div>
+        <h2>M0 — skeleton, built &amp; green end-to-end ✅</h2>
+        <div class="cols three">
+          <div class="card"><h3>Core</h3><p>Units/provenance/artifacts · config · credentials (keyring) · redacted logging · errors</p></div>
+          <div class="card"><h3>Engine</h3><p>Pluggable + mock model providers · tool registry + echo · LangGraph graph + SQLite checkpointer · interrupts</p></div>
+          <div class="card"><h3>Edges</h3><p>Workspace store (SQLite+DuckDB+files) · FastAPI SSE server · React workbench · settings</p></div>
+        </div>
+        <p class="big" style="margin-top: 18px">Full test pyramid — pytest · vitest · Playwright — green on
+          <b>Linux · macOS · Windows × Python 3.11 / 3.12 / 3.13</b>. Exit check: “hello” → echo →
+          streamed artifact card, checkpoint persisted.</p>
+      </section>
+
+      <!-- 10 · roadmap -->
+      <section class="slide">
+        <div class="kicker">Roadmap</div>
+        <h2>Vertical slices, each ending with the story further along</h2>
+        <table>
+          <thead><tr><th>Milestone</th><th>Scope</th><th>Exit</th></tr></thead>
+          <tbody>
+            <tr><td><b>M1</b></td><td>SIMBAD/Sesame · Gaia ADQL + schema registry · compute tools · plot spec · HITL + escape hatch</td><td>“distance &amp; tangential velocity of AD&nbsp;Leo?” with an editable ADQL card</td></tr>
+            <tr><td><b>M2</b></td><td>VizieR · MAST+lightkurve · ADS · Obs/Lit/Time agents · flares · periodogram · Aladin · jobs</td><td>full day-one story end-to-end</td></tr>
+            <tr><td><b>M3</b></td><td>reproducibility bundle · benchmark + LangSmith evals · docs site · Docker compose · PyPI alpha</td><td>reproducible, evaluated, installable</td></tr>
+            <tr><td><b>M4+</b></td><td>Tier 2–4 sources · spectroscopy · imaging · MCMC · Tauri · JOSS</td><td>breadth</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 11 · determinism -->
+      <section class="slide">
+        <div class="kicker">Quality</div>
+        <h2>Deterministic by construction</h2>
+        <div class="cols">
+          <div>
+            <ul class="big">
+              <li><b>mock</b> model provider replays scripted responses — no API key, ever, in tests</li>
+              <li>Recorded archive fixtures — <b>no live network</b> in unit/component/e2e</li>
+              <li>UI fixtures generated <b>from the Python models</b> → shapes can’t drift</li>
+              <li>Deterministic evaluators: unit, value ± tolerance, provenance completeness</li>
+              <li><code>make check</code> is the single gate; CI on 3 OSes × 3 Pythons</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>One gate</h3>
+            <pre style="margin: 0">make check
+<span class="c"># lint · mypy · pytest</span>
+<span class="c"># vitest · playwright</span>
+
+astroassist serve --profile mock
+<span class="c"># the whole path, offline</span></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 12 · deploy -->
+      <section class="slide">
+        <div class="kicker">Deployment · illustrative</div>
+        <h2>Local, for a group of ~20</h2>
+        <div class="cols">
+          <div class="card">
+            <h3>A · per-workstation <span style="color: var(--good)">(recommended)</span></h3>
+            <p>Each researcher runs their own instance. Zero shared infra, perfect data isolation,
+              keyring credentials.</p>
+            <pre style="margin: 10px 0 0">uv tool install astroassist
+astroassist serve</pre>
+          </div>
+          <div class="card">
+            <h3>B · shared appliance</h3>
+            <p>One internal Docker host behind Caddy/nginx (TLS + SSO). Because v1 is single-user, run
+              <b>one isolated instance per person</b>; a shared cache keeps archive traffic polite;
+              central nightly backups.</p>
+          </div>
+        </div>
+        <p class="big" style="margin-top: 16px">The app binds <code>127.0.0.1</code> and has no built-in
+          auth (a deliberate v1 non-goal) — the reverse proxy provides identity and TLS.</p>
+      </section>
+
+      <!-- 13 · cicd/devops -->
+      <section class="slide">
+        <div class="kicker">CI/CD &amp; DevOps</div>
+        <h2>Green matrix in · one-tag release out</h2>
+        <div class="cols">
+          <div class="card">
+            <h3>CI (in place)</h3>
+            <ul class="big" style="font-size: 16px">
+              <li>ruff · mypy · pytest — 3 OS × 3 Python</li>
+              <li>frontend eslint + build · Playwright e2e</li>
+              <li>pinned lockfiles · run concurrency</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>CD (recommended)</h3>
+            <ul class="big" style="font-size: 16px">
+              <li>tag <code>v*</code> → wheel + multi-arch image</li>
+              <li>PyPI via OIDC · image to ghcr.io</li>
+              <li>appliance: <code>compose pull &amp;&amp; up -d</code></li>
+            </ul>
+          </div>
+        </div>
+        <div class="chips" style="margin-top: 16px">
+          <span class="chip">🔐 keyring / secrets</span>
+          <span class="chip">📈 structlog + /api/health</span>
+          <span class="chip">💾 nightly restic backups</span>
+          <span class="chip">🤝 RatePolicy + cache</span>
+          <span class="chip">🧪 sandboxed kernel</span>
+          <span class="chip">🔄 Renovate + pip-audit</span>
+        </div>
+      </section>
+
+      <!-- 14 · close -->
+      <section class="slide">
+        <div class="kicker">In one sentence</div>
+        <h1 style="max-width: 15ch">Correctness you can <span class="g">inspect and reproduce</span>.</h1>
+        <p class="big">AstroAssist trades a little flexibility for determinism, provenance and
+          reproducibility — the properties a scientist actually needs. M0 proves the spine; the AD&nbsp;Leo
+          story is next.</p>
+        <div class="chips" style="margin-top: 22px">
+          <span class="chip"><b>Read more</b> → <a href="reference.html">Technical reference</a></span>
+          <span class="chip"><a href="https://github.com/rsalehin/AstroAssist" target="_blank" rel="noopener">github.com/rsalehin/AstroAssist ↗</a></span>
+        </div>
+      </section>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prev" aria-label="Previous">‹ Prev</button>
+      <div class="dots" id="dots"></div>
+      <button class="btn" id="next" aria-label="Next">Next ›</button>
+    </div>
+    <div class="counter" id="counter">1 / 14</div>
+    <div class="hint">← → / Space to navigate · F fullscreen · T theme</div>
+
+    <script>
+      (function () {
+        var root = document.documentElement;
+        try { var s = localStorage.getItem("aa-theme"); if (s) root.setAttribute("data-theme", s); } catch (e) {}
+        function toggleTheme() {
+          var n = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+          root.setAttribute("data-theme", n);
+          try { localStorage.setItem("aa-theme", n); } catch (e) {}
+        }
+        document.getElementById("theme").addEventListener("click", toggleTheme);
+
+        var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+        var i = 0;
+        var dotsWrap = document.getElementById("dots");
+        slides.forEach(function (_, idx) {
+          var b = document.createElement("button");
+          b.className = "dot" + (idx === 0 ? " on" : "");
+          b.setAttribute("aria-label", "Go to slide " + (idx + 1));
+          b.addEventListener("click", function () { go(idx); });
+          dotsWrap.appendChild(b);
+        });
+        var dots = Array.prototype.slice.call(dotsWrap.children);
+        var counter = document.getElementById("counter");
+        var progress = document.getElementById("progress");
+
+        // deep-link via #hash
+        var h = parseInt(location.hash.replace("#", ""), 10);
+        if (!isNaN(h) && h >= 1 && h <= slides.length) i = h - 1;
+
+        function render() {
+          slides.forEach(function (s, idx) { s.classList.toggle("active", idx === i); });
+          dots.forEach(function (d, idx) { d.classList.toggle("on", idx === i); });
+          counter.textContent = (i + 1) + " / " + slides.length;
+          progress.style.width = ((i + 1) / slides.length) * 100 + "%";
+          history.replaceState(null, "", "#" + (i + 1));
+        }
+        function go(n) { i = Math.max(0, Math.min(slides.length - 1, n)); render(); }
+        function next() { go(i + 1); }
+        function prev() { go(i - 1); }
+        render();
+
+        document.getElementById("next").addEventListener("click", next);
+        document.getElementById("prev").addEventListener("click", prev);
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); next(); }
+          else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); prev(); }
+          else if (e.key === "Home") { go(0); }
+          else if (e.key === "End") { go(slides.length - 1); }
+          else if (e.key.toLowerCase() === "t") { toggleTheme(); }
+          else if (e.key.toLowerCase() === "f") {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else document.exitFullscreen();
+          }
+        });
+        // click zones (ignore clicks on interactive chrome)
+        document.getElementById("deck").addEventListener("click", function (e) {
+          if (e.target.closest("a,button")) return;
+          if (e.clientX > window.innerWidth * 0.5) next(); else prev();
+        });
+      })();
+    </script>
+  </body>
+</html>
